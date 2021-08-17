@@ -1,30 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Nav from "./components/Nav";
+import Create from "./pages/Create";
 
 import "./App.css";
 
-import Post from "./components/Post";
-
 function App() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const response = await fetch("http://localhost:5000/posts");
-      const data = await response.json();
-      setPosts(data);
-    };
-    getPosts();
-  }, []);
-
   return (
     <div className="App">
-      {posts.map((post) => (
-        <Post
-          likes={post.likes}
-          description={post.description}
-          url={post.image && post.image.url}
-        />
-      ))}
+      <h2>App </h2>
+      <BrowserRouter>
+        <Nav />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/create" exact component={Create} />
+        </Switch>
+      </BrowserRouter>
+      <Home />
     </div>
   );
 }
